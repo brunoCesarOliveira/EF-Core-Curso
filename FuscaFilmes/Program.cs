@@ -9,10 +9,15 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 //Criando o Banco de dados
+/**
 using (var context = new Context())
 {
     context.Database.EnsureCreated();
 }
+*/
+
+builder.Services.AddDbContext<Context>(options =>
+options.UseSqlite(builder.Configuration["ConnectionStrings:FuscaFilmeStr"]));
 
 
 // Add services to the container.
@@ -36,24 +41,24 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-//Verbos do Http
-app.MapGet("/diretor", () =>
+
+
+// Verbos do Http
+app.MapGet("/diretor", (Context context) =>
 {
-    using var context = new Context();
     return context?.Diretores?.Include(diretor => diretor.Filmes).ToList();
 }).WithOpenApi();
 
-app.MapPost("/diretor", (Diretor diretor) =>
+app.MapPost("/diretor", (Context context, Diretor diretor) =>
 {
-    using var context = new Context();
     context.Diretores?.Add(diretor);
     context.SaveChanges();
 
 }).WithOpenApi();
 
-app.MapPut("/diretor/{diretorId}", (int diretorId, Diretor diretorNovo) =>
+app.MapPut("/diretor/{diretorId}", (Context context, int diretorId, Diretor diretorNovo) =>
 {
-    using var context = new Context();
+
     var diretor = context.Diretores.Find(diretorId);
 
     if (diretor != null)
@@ -77,9 +82,9 @@ app.MapPut("/diretor/{diretorId}", (int diretorId, Diretor diretorNovo) =>
 
 }).WithOpenApi();
 
-app.MapDelete("/diretor/{diretorId}", (int diretorId) =>
+app.MapDelete("/diretor/{diretorId}", (Context context, int diretorId) =>
 {
-    using var context = new Context();
+
     var diretor = context.Diretores.Find(diretorId);
 
     if (diretor != null)
