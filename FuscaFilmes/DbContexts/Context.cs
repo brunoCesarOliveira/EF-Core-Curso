@@ -15,5 +15,15 @@ namespace FuscaFilmes.DbContexts
         protected override void OnConfiguring(DbContextOptionsBuilder options) =>
             options.UseSqlite("Data Source=EFCoreConsole.db");
         */
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Fazendo a configurção dos relacionamentos
+            modelBuilder.Entity<Diretor>()
+                        .HasMany(e => e.Filmes)
+                        .WithOne(e => e.Diretor)
+                        .HasForeignKey(fk => fk.DiretorId)
+                        .IsRequired();
+        }
     }
 }
