@@ -3,7 +3,6 @@ using FuscaFilmes.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
@@ -60,11 +59,11 @@ namespace FuscaFilmes.Migrations
             modelBuilder.Entity("FuscaFilmes.Entities.Filme", b =>
                 {
                     b.HasOne("FuscaFilmes.Entities.Diretor", "Diretor")
-                '        .WithMany("Filmes")
+                        .WithMany("Filmes")
                         .HasForeignKey("DiretorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-'
+
                     b.Navigation("Diretor");
                 });
 
