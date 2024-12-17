@@ -1,7 +1,7 @@
-﻿using FuscaFilmes.Entities;
+﻿using FuscaFilmes.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace FuscaFilmes.DbContexts
+namespace FuscaFilmes.Contexts
 {
     public class Context : DbContext
     {

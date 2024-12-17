@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuscaFilmes", "FuscaFilmes\FuscaFilmes.csproj", "{3EFEFD76-B1A9-4057-AE91-BB1A877CCA43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuscaFilme.Repo", "FuscaFilme.Repo\FuscaFilme.Repo.csproj", "{15485A11-E7D5-4C7B-AD81-058B54DA31CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuscaFilme.Domain", "FuscaFilme.Domain\FuscaFilme.Domain.csproj", "{7A14B72B-0184-4F44-AA9C-5684BE17D8EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{3EFEFD76-B1A9-4057-AE91-BB1A877CCA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3EFEFD76-B1A9-4057-AE91-BB1A877CCA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3EFEFD76-B1A9-4057-AE91-BB1A877CCA43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15485A11-E7D5-4C7B-AD81-058B54DA31CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15485A11-E7D5-4C7B-AD81-058B54DA31CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15485A11-E7D5-4C7B-AD81-058B54DA31CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15485A11-E7D5-4C7B-AD81-058B54DA31CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A14B72B-0184-4F44-AA9C-5684BE17D8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A14B72B-0184-4F44-AA9C-5684BE17D8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A14B72B-0184-4F44-AA9C-5684BE17D8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A14B72B-0184-4F44-AA9C-5684BE17D8EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

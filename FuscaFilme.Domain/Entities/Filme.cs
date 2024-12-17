@@ -1,4 +1,4 @@
-﻿namespace FuscaFilmes.Entities
+﻿namespace FuscaFilmes.Domain.Entities
 {
     public class Filme
     {

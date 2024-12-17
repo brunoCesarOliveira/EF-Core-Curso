@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace FuscaFilmes.Entities
+﻿namespace FuscaFilmes.Domain.Entities
 {
     public class Diretor
     {
