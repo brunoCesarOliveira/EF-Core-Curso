@@ -10,14 +10,29 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FuscaFilme.Repo.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20241217003609_InitialCreation")]
-    partial class InitialCreation
+    [Migration("20241222204535_RelacionamentoN-N")]
+    partial class RelacionamentoNN
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
+
+            modelBuilder.Entity("FuscaFilme.Domain.Entities.DiretorFilme", b =>
+                {
+                    b.Property<int>("DiretorId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FilmeId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("DiretorId", "FilmeId");
+
+                    b.HasIndex("FilmeId");
+
+                    b.ToTable("DiretoresFilmes", (string)null);
+                });
 
             modelBuilder.Entity("FuscaFilmes.Domain.Entities.Diretor", b =>
                 {
@@ -26,7 +41,6 @@ namespace FuscaFilme.Repo.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -70,16 +84,10 @@ namespace FuscaFilme.Repo.Migrations
                     b.Property<int>("Ano")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DiretorId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Titulo")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DiretorId");
 
                     b.ToTable("Filmes");
 
@@ -88,88 +96,91 @@ namespace FuscaFilme.Repo.Migrations
                         {
                             Id = 1,
                             Ano = 2010,
-                            DiretorId = 1,
                             Titulo = "Inception"
                         },
                         new
                         {
                             Id = 2,
                             Ano = 2008,
-                            DiretorId = 1,
                             Titulo = "The Dark Knight"
                         },
                         new
                         {
                             Id = 3,
                             Ano = 1994,
-                            DiretorId = 2,
                             Titulo = "Pulp Fiction"
                         },
                         new
                         {
                             Id = 4,
                             Ano = 2012,
-                            DiretorId = 2,
                             Titulo = "Django Unchained"
                         },
                         new
                         {
                             Id = 5,
                             Ano = 1993,
-                            DiretorId = 3,
                             Titulo = "Jurassic Park"
                         },
                         new
                         {
                             Id = 6,
                             Ano = 1993,
-                            DiretorId = 3,
                             Titulo = "Schindler's List"
                         },
                         new
                         {
                             Id = 7,
                             Ano = 2013,
-                            DiretorId = 4,
                             Titulo = "The Wolf of Wall Street"
                         },
                         new
                         {
                             Id = 8,
                             Ano = 1990,
-                            DiretorId = 4,
                             Titulo = "Goodfellas"
                         },
                         new
                         {
                             Id = 9,
                             Ano = 2017,
-                            DiretorId = 5,
                             Titulo = "Lady Bird"
                         },
                         new
                         {
                             Id = 10,
                             Ano = 2023,
-                            DiretorId = 5,
                             Titulo = "Barbie"
                         });
                 });
 
-            modelBuilder.Entity("FuscaFilmes.Domain.Entities.Filme", b =>
+            modelBuilder.Entity("FuscaFilme.Domain.Entities.DiretorFilme", b =>
                 {
                     b.HasOne("FuscaFilmes.Domain.Entities.Diretor", "Diretor")
-                        .WithMany("Filmes")
+                        .WithMany("DiretoresFilmes")
                         .HasForeignKey("DiretorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FuscaFilmes.Domain.Entities.Filme", "Filme")
+                        .WithMany("DiretoresFilmes")
+                        .HasForeignKey("FilmeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Diretor");
+
+                    b.Navigation("Filme");
                 });
 
             modelBuilder.Entity("FuscaFilmes.Domain.Entities.Diretor", b =>
                 {
-                    b.Navigation("Filmes");
+                    b.Navigation("DiretoresFilmes");
+                });
+
+            modelBuilder.Entity("FuscaFilmes.Domain.Entities.Filme", b =>
+                {
+                    b.Navigation("DiretoresFilmes");
                 });
 #pragma warning restore 612, 618
         }

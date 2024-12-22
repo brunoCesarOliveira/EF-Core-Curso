@@ -13,10 +13,12 @@ namespace FuscaFilmes.EndPointHandlers
         public static IEnumerable<Filme> GetFilmes(int id, Context context)
         {
             return context?.Filmes?
-                           .Include(filme => filme.Diretor)
-                           .Where(filme => filme.Id == id)
-                          // .OrderBy(filme => filme.Ano)
-                          .OrderByDescending(filme => filme.Ano)
+                           .Include(filme => filme.Diretores)
+                           .ThenInclude(filme => filme)
+
+                           //  .Where(filme => filme.Id == id)
+                           // .OrderBy(filme => filme.Ano)
+                           .OrderByDescending(filme => filme.Ano)
                            //.ThenBy(filme => filme.Titulo)
                            .ThenByDescending(filme => filme.Titulo)
                            .ToList();
@@ -26,7 +28,7 @@ namespace FuscaFilmes.EndPointHandlers
         {
             return context?.Filmes?
                            .Where(filme => filme.Id == Id)
-                           .Include(filme => filme.Diretor).ToList();
+                           .Include(filme => filme.Diretores).ToList();
         }
 
         public static IEnumerable<Filme> GetFilmeEEFunctionsByTitulo(string titulo, Context context)
@@ -34,20 +36,20 @@ namespace FuscaFilmes.EndPointHandlers
             return context?.Filmes?
                            .Where(filme =>
                                  EF.Functions.Like(filme.Titulo, $"%{titulo}%"))
-                           .Include(filme => filme.Diretor).ToList();
+                           .Include(filme => filme.Diretores).ToList();
         }
 
         public static IEnumerable<Filme> GetFilmeContainsTitulo(string titulo, Context context)
         {
             return context.Filmes
                           .Where(filme => filme.Titulo.Contains(titulo))
-                          .Include(filme => filme.Diretor).ToList();
+                          .Include(filme => filme.Diretores).ToList();
         }
 
         public static IEnumerable<Filme>? GetFilmeByName(string titulo, Context context)
         {
             return context?.Filmes?
-                           .Include(filme => filme.Diretor)
+                           .Include(filme => filme.Diretores)
                            .Where(filme => filme.Titulo.Contains(titulo))
                            .ToList();
         }
