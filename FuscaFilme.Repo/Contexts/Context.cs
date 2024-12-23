@@ -1,7 +1,6 @@
 ﻿using FuscaFilme.Domain.Entities;
 using FuscaFilmes.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace FuscaFilmes.Contexts
 {
@@ -50,46 +49,72 @@ namespace FuscaFilmes.Contexts
             */
 
 
-            /** Relacionamentos N-Diretores N-Filmes**/
+            // Usando FluentApi
+            // Organizando a fluent api dentro da uma lamda
+            modelBuilder.Entity<Diretor>(
+               d =>
+               {
+                   //Relacionamentos N-Diretores N-Filmes/
+                   d.HasMany(d => d.Filmes)
+                   .WithMany(f => f.Diretores)
+                   .UsingEntity<DiretorFilme>(
+                   df => df
+                       .HasOne<Filme>(e => e.Filme)
+                       .WithMany(e => e.DiretoresFilmes)
+                       .HasForeignKey(df => df.FilmeId),
 
-            modelBuilder.Entity<Diretor>()
-                .HasMany(d => d.Filmes)
-                .WithMany(f => f.Diretores)
-                .UsingEntity<DiretorFilme>(
+                       df => df
+                       .HasOne<Diretor>(e => e.Diretor)
+                       .WithMany(e => e.DiretoresFilmes)
+                       .HasForeignKey(df => df.DiretorId),
 
-                df => df
-                     .HasOne<Filme>(e => e.Filme)
-                     .WithMany(e => e.DiretoresFilmes)
-                     .HasForeignKey(df => df.FilmeId),
+                     df =>
+                       {
+                           df.HasKey(df => new { df.DiretorId, df.FilmeId });
+                           df.ToTable("DiretoresFilmes");
+                       }
+                   );
 
-                 df => df
-                     .HasOne<Diretor>(e => e.Diretor)
-                     .WithMany(e => e.DiretoresFilmes)
-                     .HasForeignKey(df => df.DiretorId),
+                   // Relacionamento 1-1
+                   d.HasOne(d => d.DiretorDetalhes)
+                    .WithOne(d => d.Diretor)
+                    .HasForeignKey<DiretorDetalhe>(dd => dd.DiretorId);
 
-           df =>
-                   {
-                       df.HasKey(df => new { df.DiretorId, df.FilmeId });
-                       df.ToTable("DiretoresFilmes");
-                   }
-                );
+                   // Validações 
+                   //Renomeando Chave da tabela diretor
+                   d.Property(diretor => diretor.Id)
+                   .HasColumnName("id_diretor");
 
-            modelBuilder.Entity<Diretor>()
-                .HasOne(d => d.DiretorDetalhes)
-                .WithOne(d => d.Diretor)
-                .HasForeignKey<DiretorDetalhe>(dd => dd.DiretorId);
+                   //Adicionando dados de inicialização do banco de dados 
+                   d.HasData(
+                 new Diretor { Id = 1, Name = "Christopher Nolan" },
+                      new Diretor { Id = 2, Name = "Quentin Tarantino" },
+                      new Diretor { Id = 3, Name = "Steven Spielberg" },
+                      new Diretor { Id = 4, Name = "Martin Scorsese" },
+                      new Diretor { Id = 5, Name = "Greta Gerwig" }
+                     );
+               });
+
+            //Sem Lambda
+            modelBuilder.Entity<Filme>()
+                .Property(filme => filme.Titulo)
+                .HasMaxLength(100)
+                .IsRequired(false);
+
+            modelBuilder.Entity<Filme>()
+                .Property(filme => filme.Orcamento)
+                .HasPrecision(18, 2)
+                .HasColumnType("decimal(18,2");
+
+            modelBuilder.Entity<DiretorDetalhe>()
+                .Property(dd => dd.DataCriacao)
+                .HasDefaultValueSql("GETDATA()");
+
 
             modelBuilder.Entity<DiretorDetalhe>().HasData(
                 new DiretorDetalhe { Id = 1, DiretorId = 1, Biografia = "Biografia do Christopher Nolan", DataNascimento = new DateTime(1970, 7, 30) },
                      new DiretorDetalhe { Id = 2, DiretorId = 2, Biografia = "Stevem Spielberg do Christopher Nolan", DataNascimento = new DateTime(1946, 12, 18) }
-                );
-            modelBuilder.Entity<Diretor>().HasData(
-                 new Diretor { Id = 1, Name = "Christopher Nolan" },
-                 new Diretor { Id = 2, Name = "Quentin Tarantino" },
-                 new Diretor { Id = 3, Name = "Steven Spielberg" },
-                 new Diretor { Id = 4, Name = "Martin Scorsese" },
-                 new Diretor { Id = 5, Name = "Greta Gerwig" }
-             );
+                 );
 
             modelBuilder.Entity<Filme>().HasData(
                 new Filme { Id = 1, Titulo = "Inception", Ano = 2010, },
@@ -124,7 +149,7 @@ namespace FuscaFilmes.Contexts
                 new { DiretorId = 6, FilmeId = 17 },
                 new { DiretorId = 6, FilmeId = 18 }
                 );
-
         }
+
     }
 }

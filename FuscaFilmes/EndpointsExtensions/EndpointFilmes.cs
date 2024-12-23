@@ -9,25 +9,20 @@ namespace FuscaFilmes.EndpointsExtensions
     {
         public static void FilmesEndpoints(this IEndpointRouteBuilder app)
         {
-            /*
 
-            app.MapGet("/filmes/byId/{id}", FilmesHandlers.GetFilmeById).WithOpenApi();
+            app.MapGet("/filmes/byId/{id}", FilmesHandlers.GetFilmeByIdAsync).WithOpenApi();
 
-            app.MapGet("/filmes/byName/{tiutlo}", FilmesHandlers.GetFilmeByName).WithOpenApi();
+            app.MapGet("/filmes/byName/{tiutlo}", FilmesHandlers.GetFilmeByNameAsync).WithOpenApi();
 
-            app.MapGet("/filmes/EFFunction/byNames/{tiutlo}", FilmesHandlers.GetFilmeEEFunctionsByTitulo).WithOpenApi();
+            app.MapGet("/filmes/EFFunction/byNames/{tiutlo}", FilmesHandlers.GetFilmeEEFunctionsByTituloAsync).WithOpenApi();
 
-            app.MapGet("/filmes/EFFunction/byNames/{tiutlo}", FilmesHandlers.GetFilmeContainsTitulo).WithOpenApi();
+            app.MapPost("/filmes", FilmesHandlers.AddFilmeAsync).WithOpenApi();
 
-            app.MapPost("/filmes", FilmesHandlers.AddFilme).WithOpenApi();
-
-            app.MapDelete("/filmes/{filmeId}", FilmesHandlers.ExecuteDeleteFilme).WithOpenApi();
+            app.MapDelete("/filmes/{filmeId}", FilmesHandlers.ExecuteDeleteFilmeAsync).WithOpenApi();
 
             app.MapPatch("/filmesUpdate", FilmesHandlers.UpdateFilme).WithOpenApi();
 
-            app.MapPatch("/filmesExecuteUpdate", FilmesHandlers.ExecuteUpdateFilme).WithOpenApi();
-            */
-
+            app.MapPatch("/filmesExecuteUpdate", FilmesHandlers.ExecuteUpdateFilmeAsync).WithOpenApi();
         }
     }
 }

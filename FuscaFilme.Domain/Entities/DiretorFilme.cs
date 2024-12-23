@@ -8,5 +8,6 @@ namespace FuscaFilme.Domain.Entities
         public int FilmeId { get; set; }
         public Filme Filme { get; set; }
         public Diretor Diretor { get; set; }
+        public DateTime DataCriacao { get; set; }
     }
 }

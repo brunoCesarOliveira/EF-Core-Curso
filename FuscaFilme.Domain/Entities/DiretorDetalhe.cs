@@ -9,6 +9,6 @@ namespace FuscaFilme.Domain.Entities
         public DateTime DataNascimento { get; set; }
         public int DiretorId { get; set; }
         public Diretor Diretor { get; set; }
-
+        public DateTime DataCriacao { get; set; }
     }
 }

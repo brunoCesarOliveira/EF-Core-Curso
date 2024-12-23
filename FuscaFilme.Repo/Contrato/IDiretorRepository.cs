@@ -4,13 +4,13 @@ namespace FuscaFilme.Repo.Contrato
 {
     public interface IDiretorRepository
     {
-        IEnumerable<Diretor> GetDiretores();
-        Diretor GetDiretorByName(string name);
-        IEnumerable<Diretor> GetDiretoresById(int id);
-        void Add(Diretor diretor);
-        void Update(Diretor diretor);
-        void Delete(int diretorId);
-        bool SaveChanges();
+        Task<IEnumerable<Diretor>> GetDiretoresAsync();
+        Task<Diretor> GetDiretorByNameAsync(string name);
+        Task<IEnumerable<Diretor>> GetDiretoresByIdAsync(int id);
+        Task AddAsync(Diretor diretor);
+        Task Update(Diretor diretor);
+        Task Delete(int diretorId);
+        Task<bool> SaveChangesAsync();
 
     }
 }

@@ -10,13 +10,13 @@ namespace FuscaFilmes.EndpointsExtensions
         public static void DiretoresEndpoints(this IEndpointRouteBuilder app)
         {
             // Chamando a função vid delegagte
-            app.MapGet("/diretores", DiretoresHandlers.GetDiretores).WithOpenApi();
+            app.MapGet("/diretores", DiretoresHandlers.GetDiretoresAsync).WithOpenApi();
 
-            app.MapGet("/diretores/agregacao/{name}", DiretoresHandlers.GetDiretorByName).WithOpenApi();
+            app.MapGet("/diretores/agregacao/{name}", DiretoresHandlers.GetDiretorByNameAsync).WithOpenApi();
 
-            app.MapGet("/diretores/where/{id}", DiretoresHandlers.GetDiretorById).WithOpenApi();
+            app.MapGet("/diretores/where/{id}", DiretoresHandlers.GetDiretorByIdAsync).WithOpenApi();
 
-            app.MapPost("/diretores", DiretoresHandlers.AddDiretor).WithOpenApi();
+            app.MapPost("/diretores", DiretoresHandlers.AddDiretorAsync).WithOpenApi();
 
             app.MapPut("/diretores/{diretorId}", DiretoresHandlers.UpdateDiretor).WithOpenApi();
 

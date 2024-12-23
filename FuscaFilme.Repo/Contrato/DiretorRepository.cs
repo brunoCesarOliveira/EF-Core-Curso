@@ -9,49 +9,50 @@ namespace FuscaFilme.Repo.Contrato
 
         public Context Context { get; } = _context;
 
-        public IEnumerable<Diretor> GetDiretores()
+        public async Task<IEnumerable<Diretor>> GetDiretoresAsync()
         {
-            return Context.Diretores
-                .Include(diretor => diretor.DiretoresFilmes)
-                .ThenInclude(df => df.Filme)
-                .Include(d => d.DiretorDetalhes)
-                .ToList();
+            return await Context.Diretores
+                                .Include(diretor => diretor.DiretoresFilmes)
+                                .ThenInclude(df => df.Filme)
+                                .Include(d => d.DiretorDetalhes)
+                                .ToListAsync();
         }
 
-        public Diretor GetDiretorByName(string name)
+        public async Task<Diretor> GetDiretorByNameAsync(string name)
         {
-            return Context?.Diretores?
+            return await Context?.Diretores?
                             .Include(diretor => diretor.DiretoresFilmes)
-                             .FirstOrDefault(diretor => diretor.Name.Contains(name)) ?? new Diretor { Id = 99999, Name = "Marina" };
+                            .FirstOrDefaultAsync(diretor => diretor.Name.Contains(name))
+                                                ?? new Diretor { Id = 99999, Name = "Marina" };
 
         }
 
-        public IEnumerable<Diretor> GetDiretoresById(int id)
+        public async Task<IEnumerable<Diretor>> GetDiretoresByIdAsync(int id)
         {
-            return Context?.Diretores
-                  .Include(diretor => diretor.DiretoresFilmes)
-                  .ThenInclude(d => d.Filme)
-                  .Include(d=>d.DiretorDetalhes)
-                  .Where(diretor => diretor.Id == id)
-                  .ToList();
+            return await Context?.Diretores
+                                 .Include(diretor => diretor.DiretoresFilmes)
+                                 .ThenInclude(d => d.Filme)
+                                 .Include(d => d.DiretorDetalhes)
+                                 .Where(diretor => diretor.Id == id)
+                                 .ToListAsync();
         }
 
-        public void Add(Diretor diretor)
+        public async Task AddAsync(Diretor diretor)
         {
-            Context.Diretores.Add(diretor);
+            await Context.Diretores.AddAsync(diretor);
         }
 
-        public void Delete(int diretorId)
+        public async Task Delete(int diretorId)
         {
-            var diretor = Context.Diretores.Find(diretorId);
+            var diretor = await Context.Diretores.FindAsync(diretorId);
 
             if (diretor != null)
                 Context.Diretores?.Remove(diretor);
         }
 
-        public void Update(Diretor diretorNovo)
+        public async Task Update(Diretor diretorNovo)
         {
-            var diretor = Context.Diretores.Find(diretorNovo.Id);
+            var diretor = await Context.Diretores.FindAsync(diretorNovo.Id);
 
             if (diretor != null)
             {
@@ -66,11 +67,9 @@ namespace FuscaFilme.Repo.Contrato
             }
         }
 
-        public bool SaveChanges()
+        public async Task<bool> SaveChangesAsync()
         {
-            return Context.SaveChanges() > 0;
+            return await Context.SaveChangesAsync() > 0;
         }
-
-
     }
 }

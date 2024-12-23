@@ -2,45 +2,46 @@
 using FuscaFilme.Repo.Contrato;
 using FuscaFilmes.Domain.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FuscaFilmes.EndPointHandlers
 {
     public static class DiretoresHandlers
     {
-        public static IEnumerable<Diretor> GetDiretores(IDiretorRepository diretorRepository)
+        public static Task<IEnumerable<Diretor>> GetDiretoresAsync(IDiretorRepository diretorRepository)
         {
-            return diretorRepository.GetDiretores();
+            return diretorRepository.GetDiretoresAsync();
 
         }
 
-        public static Diretor GetDiretorByName(string name, IDiretorRepository diretorRepository)
+        public static Task<Diretor> GetDiretorByNameAsync(string name, IDiretorRepository diretorRepository)
         {
-            return diretorRepository.GetDiretorByName(name);
+            return diretorRepository.GetDiretorByNameAsync(name);
         }
 
-        public static IEnumerable<Diretor>? GetDiretorById(int id, IDiretorRepository diretorRepository)
+        public static Task<IEnumerable<Diretor>> GetDiretorByIdAsync(int id, IDiretorRepository diretorRepository)
         {
-            return diretorRepository.GetDiretoresById(id);
-
-        }
-
-        public static void AddDiretor(IDiretorRepository diretorRepository, Diretor diretor)
-        {
-            diretorRepository.Add(diretor);
-            diretorRepository.SaveChanges();
-        }
-
-        public static void UpdateDiretor(IDiretorRepository diretorRepository, Diretor diretorNovo)
-        {
-            diretorRepository.Update(diretorNovo);
-            diretorRepository.SaveChanges();
+            return diretorRepository.GetDiretoresByIdAsync(id);
 
         }
 
-        public static void DeleteDiretor(IDiretorRepository diretorRepository, int diretorId)
+        public static async Task AddDiretorAsync(IDiretorRepository diretorRepository, Diretor diretor)
         {
-            diretorRepository.Delete(diretorId);
-            diretorRepository.SaveChanges();
+            await diretorRepository.AddAsync(diretor);
+            await diretorRepository.SaveChangesAsync();
+        }
+
+        public static async Task UpdateDiretor(IDiretorRepository diretorRepository, Diretor diretorNovo)
+        {
+            _ = diretorRepository.Update(diretorNovo);
+            await diretorRepository.SaveChangesAsync();
+
+        }
+
+        public static async Task DeleteDiretor(IDiretorRepository diretorRepository, int diretorId)
+        {
+            _ = diretorRepository.Delete(diretorId);
+            await diretorRepository.SaveChangesAsync();
         }
     }
 }
